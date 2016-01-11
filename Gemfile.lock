@@ -1,0 +1,81 @@
+GIT
+  remote: git://github.com/higanworks/itamae-plugin-recipe-nginx_build.git
+  revision: a43bf7fece64656efc23e8f05c9c09969784ac0e
+  ref: updates_for_first_time
+  specs:
+    itamae-plugin-recipe-nginx_build (0.1.0)
+      itamae (~> 1)
+
+PATH
+  remote: ../kitchen-driver-sakuracloud
+  specs:
+    kitchen-driver-sakuracloud (0.1.3)
+      fog-sakuracloud
+      test-kitchen
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ansi (1.5.0)
+    builder (3.2.2)
+    chef-config (12.6.0)
+      mixlib-config (~> 2.0)
+      mixlib-shellout (~> 2.0)
+    excon (0.45.4)
+    fog-core (1.35.0)
+      builder
+      excon (~> 0.45)
+      formatador (~> 0.2)
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-sakuracloud (1.7.5)
+      fog-core
+      fog-json
+    formatador (0.2.5)
+    hashie (3.4.3)
+    itamae (1.9.2)
+      ansi
+      hashie
+      schash (~> 0.1.0)
+      specinfra (>= 2.37.0, < 3.0.0)
+      thor
+    kitchen-provisioner-local_shell (0.0.1)
+    mixlib-config (2.2.1)
+    mixlib-install (0.7.0)
+    mixlib-shellout (2.2.5)
+    multi_json (1.11.2)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
+    net-telnet (0.1.1)
+    safe_yaml (1.0.4)
+    schash (0.1.2)
+    sfl (2.2)
+    specinfra (2.49.0)
+      net-scp
+      net-ssh (>= 2.7, < 3.1)
+      net-telnet
+      sfl
+    test-kitchen (1.5.0.rc.1)
+      chef-config (>= 12.5.1)
+      mixlib-install (~> 0.7)
+      mixlib-shellout (>= 1.2, < 3.0)
+      net-scp (~> 1.1)
+      net-ssh (~> 2.7, < 2.10)
+      safe_yaml (~> 1.0)
+      thor (~> 0.18)
+    thor (0.19.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  itamae
+  itamae-plugin-recipe-nginx_build!
+  kitchen-driver-sakuracloud!
+  kitchen-provisioner-local_shell
+  test-kitchen (>= 1.5.0.rc)
+
+BUNDLED WITH
+   1.10.6

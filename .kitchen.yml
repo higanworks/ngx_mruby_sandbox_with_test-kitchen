@@ -1,0 +1,47 @@
+---
+<%
+def server_ip
+  state = ::Kitchen::StateFile.new(File.expand_path("../", __FILE__), 'server-ubuntu-1404' )
+  state.diagnose[:hostname]
+end
+%>
+
+driver:
+  name: sakuracloud
+  serverplan: 1001
+  diskplan: 4
+  size_mb: 20480
+  api_zone: is1b
+
+transport:
+  username: root
+  ssh_key: <%= ENV['SSH_KEY_PATH'] %>
+
+provisioner:
+  name: local_shell
+  command: hostname
+
+verifier:
+  name: shell
+  command: /usr/bin/true
+
+platforms:
+  - name: centos-7.2
+    driver:
+      sourcearchive: 112800011640
+
+suites:
+  - name: server
+    provisioner:
+      name: local_shell
+      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u root -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/server.yml -l debug roles/server.rb
+    run_list:
+    attributes:
+  - name: client
+    verifier:
+      name: shell
+      command: curl <%= server_ip.to_s %>
+      remote_exec: true
+    run_list:
+    attributes:
+

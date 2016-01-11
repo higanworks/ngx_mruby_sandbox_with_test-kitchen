@@ -1,0 +1,13 @@
+---
+nginx_build:
+  nginx_version: 1.9.9
+  nginx_user: nginx
+  modules:
+    - http_ssl_module
+  modules3rds:
+    -
+      name: ngx_mruby
+      form: git
+      url: https://github.com/matsumoto-r/ngx_mruby.git
+      rev: v1.15.0
+      shprov: './configure --with-ngx-src-root=../nginx-1.9.9 && make build_mruby && make generate_gems_config'
