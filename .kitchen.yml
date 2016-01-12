@@ -1,7 +1,7 @@
 ---
 <%
 def server_ip
-  state = ::Kitchen::StateFile.new(File.expand_path("../", __FILE__), 'server-ubuntu-1404' )
+  state = ::Kitchen::StateFile.new(File.expand_path("../", __FILE__), 'server-centos-72' )
   state.diagnose[:hostname]
 end
 %>
@@ -36,11 +36,18 @@ suites:
       name: local_shell
       command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u root -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/server.yml -l debug roles/server.rb
     run_list:
-    attributes:
-  - name: client
     verifier:
       name: shell
-      command: /usr/bin/httpress -n 1000 -n 20 -t 1 http://<%= server_ip.to_s %>/
+      command: /usr/bin/httpress -n 10000 -c 50 -t 1 <%= ENV['TLS'] ? "https" : "http" %>://127.0.0.1/
+      remote_exec: true
+    attributes:
+  - name: client
+    provisioner:
+      name: local_shell
+      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u root -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/client.yml -l debug roles/client.rb
+    verifier:
+      name: shell
+      command: /usr/bin/httpress -n 10000 -c 50 -t 1 <%= ENV['TLS'] ? "https" : "http" %>://<%= server_ip.to_s %>/
       remote_exec: true
     run_list:
     attributes:
