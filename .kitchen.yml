@@ -40,7 +40,7 @@ suites:
   - name: client
     verifier:
       name: shell
-      command: curl <%= server_ip.to_s %>
+      command: /usr/bin/httpress -n 1000 -n 20 -t 1 http://<%= server_ip.to_s %>/
       remote_exec: true
     run_list:
     attributes:
