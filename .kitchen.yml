@@ -1,7 +1,7 @@
 ---
 <%
 def server_ip
-  state = ::Kitchen::StateFile.new(File.expand_path("../", __FILE__), 'server-centos-72' )
+  state = ::Kitchen::StateFile.new(File.expand_path("../", __FILE__), 'server-ubuntu-1404' )
   state.diagnose[:hostname]
 end
 %>
@@ -14,7 +14,7 @@ driver:
   api_zone: is1b
 
 transport:
-  username: root
+  username: ubuntu
   ssh_key: <%= ENV['SSH_KEY_PATH'] %>
 
 provisioner:
@@ -26,28 +26,28 @@ verifier:
   command: /usr/bin/true
 
 platforms:
-  - name: centos-7.2
+  - name: ubuntu-14.04
     driver:
-      sourcearchive: 112800011640
+      sourcearchive: 112700955889
 
 suites:
   - name: server
     provisioner:
       name: local_shell
-      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u root -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/server.yml -l debug roles/server.rb
+      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u ubuntu -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/server.yml -l debug roles/server.rb
     run_list:
     verifier:
       name: shell
-      command: /usr/bin/httpress -n 10000 -c 50 -t 1 <%= ENV['TLS'] ? "https" : "http" %>://127.0.0.1/
+      command: /usr/bin/h2load --h1 -c 25 -n 10000 <%= ENV['TLS'] ? "https" : "http" %>://127.0.0.1/
       remote_exec: true
     attributes:
   - name: client
     provisioner:
       name: local_shell
-      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u root -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/client.yml -l debug roles/client.rb
+      command: until exec 6<>/dev/tcp/$KITCHEN_HOSTNAME/22; do sleep 2 ; done && itamae ssh -h $KITCHEN_HOSTNAME -u ubuntu -i <%= ENV['SSH_KEY_PATH'] %> -y nodes/client.yml -l debug roles/client.rb
     verifier:
       name: shell
-      command: /usr/bin/httpress -n 10000 -c 50 -t 1 <%= ENV['TLS'] ? "https" : "http" %>://<%= server_ip.to_s %>/
+      command: /usr/bin/h2load --h1 -c 25 -n 10000 <%= ENV['TLS'] ? "https" : "http" %>://<%= server_ip.to_s %>/
       remote_exec: true
     run_list:
     attributes:

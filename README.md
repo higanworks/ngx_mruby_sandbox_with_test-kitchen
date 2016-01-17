@@ -12,7 +12,8 @@ $ bundle --binstubs --path vendor/bundle
 
 - server: launch nginx wihch includes ngx_mruby.
 - client: Benchmark tools.
-    - httpress
+    - ab(Apache Bench)
+    - h2load
 
 ```
 $ ./bin/kitchen converge

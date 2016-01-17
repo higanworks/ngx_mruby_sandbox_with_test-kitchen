@@ -1,3 +1,3 @@
 include_recipe "../recipes/common_pkgs.rb"
 
-## TODO: install weighttp
+include_recipe "../recipes/nghttp2.rb"

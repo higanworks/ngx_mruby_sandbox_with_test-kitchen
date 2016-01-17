@@ -1,7 +1,6 @@
 ---
 nginx_build:
   nginx_version: 1.9.9
-  nginx_user: nginx
   modules:
     - http_ssl_module
   modules3rds:

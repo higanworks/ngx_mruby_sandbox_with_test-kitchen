@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/higanworks/itamae-plugin-recipe-nginx_build.git
-  revision: a43bf7fece64656efc23e8f05c9c09969784ac0e
-  ref: updates_for_first_time
+  revision: d9144deefb156ae4f42de1217f10ff86764e3377
+  ref: debian
   specs:
     itamae-plugin-recipe-nginx_build (0.1.0)
       itamae (~> 1)
@@ -52,7 +52,7 @@ GEM
     safe_yaml (1.0.4)
     schash (0.1.2)
     sfl (2.2)
-    specinfra (2.49.0)
+    specinfra (2.50.0)
       net-scp
       net-ssh (>= 2.7, < 3.1)
       net-telnet
